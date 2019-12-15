@@ -25,20 +25,22 @@ export default {
    // 请求成功后，提交mutation
    if (result.code===0){
     const address = result.data
-    commit(RECEIVE_ADDRESS,address)
+    commit(RECEIVE_ADDRESS, address)
    }
   },
   /*
    获取商品分类数组的异步action
    */
-  async getCategorys ({commit}) {
-    const {longitude, latitude} = state
+  async getCategorys ({commit},callback) {
+    // const {longitude, latitude} = state
    // 发异步请求
     const result = await reqCategorys()
    // 请求成功后，提交mutation
    if (result.code===0){
     const categorys = result.data
-    commit(RECEIVE_CATEGORYS,categorys)
+    commit(RECEIVE_CATEGORYS,categorys) //内部同步调用mutation更新状态数据
+     //在数据更新之后,调用回调函数
+    typeof callback === 'function' && callback()
    }
   },
   /*

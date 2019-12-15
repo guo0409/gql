@@ -5,8 +5,11 @@ import App from "./app.vue"
 import router from "./router"
 import Header from "./components/Header/Header.vue"
 import store from './vuex/store'
+
+// 注册全局组件
 Vue.component('Header',Header)
-import 'lib-flexible';
+
+// import 'lib-flexible';
 new Vue({
   render:h => h(App),
   router,

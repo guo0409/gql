@@ -2,122 +2,30 @@
   <section class="msite">
     <!--首页头部-->
     <Header :title="address.name || '定位中...'">
-    <span class="header_login" slot="right">
+     <span class="header_login" slot="right">
       <span class="header_login_text">登录|注册</span>
-    </span>
+     </span>
      <span class="header_search" slot="left">
       <i class="iconfont icon-sousuo"></i>
-    </span>
+     </span>
     </Header>
     <!--首页导航-->
     <nav class="msite_nav">
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/1.jpg">
+          <div ref="sc1" class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(cs, index) in categorysArr" :key="index">
+                <div class="link_to_food" v-for="(c,index) in cs" :key="index">
+                  <div class="food_container">
+                    <img :src="'https://fuss10.elemecdn.com' + c.image_url">
+                  </div>
+                  <span>{{c.title}}</span>
+                </div>
               </div>
-              <span>甜品饮品</span>
             </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/2.jpg">
-              </div>
-              <span>商超便利</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/3.jpg">
-              </div>
-              <span>美食</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/4.jpg">
-              </div>
-              <span>简餐</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/5.jpg">
-              </div>
-              <span>新店特惠</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/6.jpg">
-              </div>
-              <span>准时达</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/7.jpg">
-              </div>
-              <span>预订早餐</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/8.jpg">
-              </div>
-              <span>土豪推荐</span>
-            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
           </div>
-          <div class="swiper-slide">
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/9.jpg">
-              </div>
-              <span>甜品饮品</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/10.jpg">
-              </div>
-              <span>商超便利</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/11.jpg">
-              </div>
-              <span>美食</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/12.jpg">
-              </div>
-              <span>简餐</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/13.jpg">
-              </div>
-              <span>新店特惠</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/14.jpg">
-              </div>
-              <span>准时达</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/1.jpg">
-              </div>
-              <span>预订早餐</span>
-            </div>
-            <div class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/2.jpg">
-              </div>
-              <span>土豪推荐</span>
-            </div>
-          </div>
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-      </div>
-    </nav>
+        </nav>
     <!--首页附近商家-->
     <div class="msite_shop_list">
       <div class="shop_header">
@@ -186,7 +94,7 @@
       </div>
     </div>
   </section>
-    </div>
+    <!-- </div> -->
 </template>
 
 <script type="text/ecmascript-6">
@@ -196,20 +104,55 @@
 
   export default {
     computed:{
-      ...mapState(['address','categorys','shops'])
+      ...mapState(['address','categorys','shops']),
+      //包含所有分类的二维数组
+      categorysArr (){
+        const { categorys } = this
+        //二维数组
+        const bigArr =[]
+        let smallArr = []
+      
+        //遍历总的一维数组
+        categorys.forEach(c => {
+
+          //将小数组放入大数组中(只保存一次)
+          if(smallArr.length===0) {
+            bigArr.push(smallArr)
+          }
+
+          //将C保存小数组中
+          smallArr.push(c)
+
+          //小数组的长度大于8 ==> 如果小数组满了，创建一个新的小数组
+          if (smallArr.length===8){
+            smallArr = []
+          }
+        })
+
+        //返回二维数组
+        return bigArr
+      }
     },
     mounted(){
       // 分发异步action，将数据从后台请求到vuex中
       this.$store.dispatch('getCategorys')
       this.$store.dispatch('getShops')
-      //swiper 对象必须要在列表数据显示之后创建
-    new Swiper('.swiper-container',{
-      loop: true, //循环模式选项
-      // 如果需要分之器
-      pagination:{
-        el: '.swiper-pagination',
+    },
+    watch:{
+
+      categorys(){
+        // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待DOM 更新
+        this.$nextTick(() => {
+          //swiper 对象必须要在列表数据显示之后创建
+          new Swiper('.swiper-container',{
+            loop: true, //循环模式选项
+            // 如果需要分之器
+            pagination:{
+              el: '.swiper-pagination',
+            }
+          })
+        })
       }
-     })
     }
   }
 </script>
