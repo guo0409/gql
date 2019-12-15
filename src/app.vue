@@ -6,8 +6,14 @@
 </template>
 
 <script type="text/ecmascript-6">
-   import FooterGuide from '@/components/FooterGuide/FooterGuide.vue';
+   import FooterGuide from '@/components/FooterGuide/FooterGuide.vue'
+  import { reqAddress } from '@/api'
    export default {
+
+     async mounted(){
+       //通知action异步获取adress并保存到stare
+      this.$store.dispatch('getAddress')
+     },
      components:{
        FooterGuide
      }

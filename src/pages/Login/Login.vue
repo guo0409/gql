@@ -55,6 +55,26 @@
 
 <script type="text/ecmascript-6">
   export default {
+    name: 'Login',
+    data () {
+      return {
+        isShowSms: true, // true: 显示短信登陆界面,  false: 显示密码登陆界面
+        phone: '',
+        isShowPwd: false, // 密码是否可见
+      }
+  },
+  computed: {
+      // 是否是一个正确的手机号
+      isRightPhone () {
+        return /^1\d{10}$/.test(this.phone)
+      }
+    },
+
+    methods: {
+      sendCode () {
+        alert('----')
+      }
+    }
   }
 </script>
 
