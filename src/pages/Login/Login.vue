@@ -4,8 +4,8 @@
       <div class="login_header">
         <h2 class="login_logo">硅谷外卖</h2>
         <div class="login_header_title">
-          <a href="javascript:;" :class="{on:isShowSms}"@click="isShowSms=true">短信登录</a>
-          <a href="javascript:;" :class="{on:!isShowSms}"@click="isShowSms=false">密码登录</a>
+          <a href="javascript:;" :class="{on:isShowSms}" @click="isShowSms=true">短信登录</a>
+          <a href="javascript:;" :class="{on:!isShowSms}" @click="isShowSms=false">密码登录</a>
         </div>
       </div>
       <div class="login_content">

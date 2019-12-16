@@ -100,14 +100,14 @@
 <script type="text/ecmascript-6">
   import Swiper from "swiper"
   import 'swiper/css/swiper.css'
-  import { mapState } from "vuex";
+  import {mapState} from "vuex";
 
   export default {
     computed:{
       ...mapState(['address','categorys','shops']),
       //包含所有分类的二维数组
       categorysArr (){
-        const { categorys } = this
+        const {categorys} = this
         //二维数组
         const bigArr =[]
         let smallArr = []
