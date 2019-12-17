@@ -13,6 +13,7 @@
      async mounted(){
        //通知action异步获取adress并保存到stare
       this.$store.dispatch('getAddress')
+      this.$store.dispatch('autoLogin')
      },
      components:{
        FooterGuide
