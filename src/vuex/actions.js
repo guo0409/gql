@@ -11,7 +11,9 @@ import {
 import {  
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_USER,
+  RECEIVE_TOKEN
 } from './mutation-types'
 
 export default {
@@ -56,4 +58,19 @@ export default {
     commit(RECEIVE_SHOPS,shops)
    }
   },
+
+  /*
+  保存用户
+  */
+ saveUser({commit},user){
+  const token = user.token
+  //将token保存到local
+  localStorage.setItem('token_key',token)
+  
+  delete user.token
+  //将token保存到state
+  commit(RECEIVE_USER,{user})
+  //将user保存到state
+  commit(RECEIVE_TOKEN,{token})
+ }
 }

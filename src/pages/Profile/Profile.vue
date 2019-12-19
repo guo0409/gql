@@ -7,7 +7,7 @@
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">登录/注册</p>
+          <p class="user-info-top">{{user.name ? user.name : '登录/注册'}}</p>
           <p>
             <span class="user-icon">
               <i class="iconfont icon-shouji icon-mobile"></i>
@@ -92,7 +92,12 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapState} from 'vuex'
+
   export default {
+    computed:{
+      ...mapState(['user'])
+    }
   }
 </script>
 

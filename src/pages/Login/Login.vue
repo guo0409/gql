@@ -5,7 +5,7 @@
         <h2 class="login_logo">硅谷外卖</h2>
         <div class="login_header_title">
           <a href="javascript:;" :class="{on: isShowSms}" @click="isShowSms=true">短信登录</a>
-          <a href="javascript:;" :class="{on: !isShowSms}" @click="isShowSms=false">密码登录</a>
+          <a href="javascript:;" :class="{on: !isShowSms}" @click="isShowPwd=true">密码登录</a>
         </div>
       </div>
       <div class="login_content">
@@ -46,7 +46,7 @@
                 <input type="text" maxlength="11" placeholder="验证码"
                   v-model="captcha" name="captcha" v-validate="{required: true,regex: /^[0-9a-zA-Z]{4}$/}">
                 <!-- 当前发送是一个跨域的http请求(不是ajax请求), 没有跨域的问题 -->
-                <img class="get_verification" src="http://localhost:4000/captcha" 
+                <img class="get_verification" src="/api/captcha" 
                   alt="captcha" @click="updateCaptcha" ref="captcha">
                 <!-- 原本404, 利用代理服务器转发请求4000的后台接口 -->
                 <!-- <img class="get_verification" src="/api/captcha" alt="captcha"> -->
@@ -54,7 +54,7 @@
               </section>
             </section>
           </div>
-          <button class="login_submit" @click.prevent="login">{{$t('login_login')}}</button>
+          <button class="login_submit" @click.prevent="login">登录</button>
         </form>
         <a href="javascript:;" class="about_us">{{$t('login_aboutUs')}}</a>
       </div>
@@ -135,6 +135,7 @@
             // 密码登陆
             result = await this.$API.reqPwdLogin({name, pwd, captcha})
             this.updateCaptcha() // 更新图形验证码
+
             this.captcha = ''
           }
 
@@ -153,7 +154,7 @@
       },
 
       updateCaptcha () {
-        this.$refs.captcha.src = 'http://localhost:4000/captcha?time=' + Date.now()
+        this.$refs.captcha.src = '/api/captcha?time=' + Date.now()
       },
 
       toggleLanguage () {

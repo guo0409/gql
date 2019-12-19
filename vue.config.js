@@ -34,7 +34,7 @@ module.exports = {
   devServer: {
     proxy: {
       // 处理以/api开头路径的请求
-      '/api': {
+      '/4000': {
         target: 'http://localhost:4000', // 转发的目标地址
         pathRewrite: {
           '^/api' : ''  // 转发请求时去除路径前面的/api
