@@ -154,7 +154,7 @@
       },
 
       updateCaptcha () {
-        this.$refs.captcha.src = '/api/captcha?time=' + Date.now()
+        this.$refs.captcha.src = 'http://localhost:4000/captcha?time=' + Date.now()
       },
 
       toggleLanguage () {

@@ -9,6 +9,7 @@ import {
   RECEIVE_TOKEN,
   RECEIVE_USER
 } from './mutation-types'
+
 export default {
   [RECEIVE_ADDRESS] (state, address) {
     state.address = address

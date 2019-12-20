@@ -66,7 +66,7 @@ instance.interceptors.response.use(
       const path = router.currentRoute.path
       if (path!=='/login') {
         // console.log('+++++++')
-        // router.replace('/login')
+        router.replace('/login')
         Toast(error.message)
       }
     } else { // 发了请求的错误
